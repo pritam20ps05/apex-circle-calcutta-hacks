@@ -4,7 +4,7 @@ A community for innovators, problem-solvers, and technology enthusiasts. We prov
 
 From hackathons to workshops and hands-on projects, Apex Circle brings together individuals passionate about coding, AI, cybersecurity, Deep Tech and emerging technologies. Whether you're a beginner or an expert, this is a space to learn, grow, and create alongside like-minded individuals.
 
-Join us in pushing boundaries, shaping the future, and making an impact through technology! ⚡🚀
+Join us in pushing boundaries, shaping the future, and making an impact through technology! ⚡
 
 ---
 
