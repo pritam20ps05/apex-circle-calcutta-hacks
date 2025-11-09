@@ -10,10 +10,13 @@ const VintageCard = ({ children }) => (
 const AvatarCardGenerator = () => {
   const [selectedStyle, setSelectedStyle] = useState('vivekananda');
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [originalImage, setOriginalImage] = useState(null);
   const [participantName, setParticipantName] = useState('');
   const [participantRole, setParticipantRole] = useState('Participant');
+  const [isProcessing, setIsProcessing] = useState(false);
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
+  const previewImageRef = useRef(null);
 
   const avatarStyles = [
     {
@@ -111,9 +114,58 @@ const AvatarCardGenerator = () => {
   const handleImageUpload = e => {
     const file = e.target.files[0];
     if (file) {
+      setIsProcessing(true);
       const reader = new FileReader();
       reader.onload = event => {
-        setUploadedImage(event.target.result);
+        const imageData = event.target.result;
+        setOriginalImage(imageData);
+        
+        // Create image to get dimensions and process
+        const img = new Image();
+        img.onload = () => {
+          // Preserve original aspect ratio and quality
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          
+          // Calculate dimensions maintaining aspect ratio
+          const maxSize = 512; // High quality for preview
+          let width = img.width;
+          let height = img.height;
+          
+          if (width > height) {
+            if (width > maxSize) {
+              height = (height * maxSize) / width;
+              width = maxSize;
+            }
+          } else {
+            if (height > maxSize) {
+              width = (width * maxSize) / height;
+              height = maxSize;
+            }
+          }
+          
+          canvas.width = width;
+          canvas.height = height;
+          
+          // Use high quality image rendering
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
+          ctx.drawImage(img, 0, 0, width, height);
+          
+          // Convert to data URL with high quality
+          const processedImage = canvas.toDataURL('image/jpeg', 0.95);
+          setUploadedImage(processedImage);
+          setIsProcessing(false);
+        };
+        img.onerror = () => {
+          setIsProcessing(false);
+          alert('Error loading image. Please try another file.');
+        };
+        img.src = imageData;
+      };
+      reader.onerror = () => {
+        setIsProcessing(false);
+        alert('Error reading file. Please try again.');
       };
       reader.readAsDataURL(file);
     }
@@ -209,16 +261,46 @@ const AvatarCardGenerator = () => {
     ctx.lineWidth = 12;
     ctx.stroke();
 
-    // Draw uploaded image if available
+    // Draw uploaded image if available with proper aspect ratio
     if (uploadedImage) {
       const img = new Image();
+      img.crossOrigin = 'anonymous';
       img.onload = () => {
         ctx.save();
+        
+        // Enable high quality rendering
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        
+        // Create circular clipping path
         ctx.beginPath();
         ctx.arc(400, 380, 128, 0, Math.PI * 2);
         ctx.clip();
-        ctx.drawImage(img, 272, 252, 256, 256);
+        
+        // Calculate dimensions to maintain aspect ratio
+        const radius = 128;
+        const imgAspect = img.width / img.height;
+        let drawWidth = radius * 2;
+        let drawHeight = radius * 2;
+        let drawX = 400 - radius;
+        let drawY = 380 - radius;
+        
+        if (imgAspect > 1) {
+          // Image is wider
+          drawHeight = drawWidth / imgAspect;
+          drawY = 380 - drawHeight / 2;
+        } else {
+          // Image is taller
+          drawWidth = drawHeight * imgAspect;
+          drawX = 400 - drawWidth / 2;
+        }
+        
+        // Draw image centered in circle, maintaining aspect ratio
+        ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
         ctx.restore();
+        continueDrawing();
+      };
+      img.onerror = () => {
         continueDrawing();
       };
       img.src = uploadedImage;
@@ -324,7 +406,7 @@ const AvatarCardGenerator = () => {
           });
         });
       } catch (err) {
-        console.log('Share failed:', err);
+        // Share failed silently - user can use download instead
       }
     }
   };
@@ -410,25 +492,49 @@ const AvatarCardGenerator = () => {
               />
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full bg-[#3E2C1D] text-[#E8D9B8] px-8 py-4 font-display font-bold border-4 border-[#3E2C1D] hover:bg-[#6B4423] hover:border-[#6B4423] transition-all duration-300 flex items-center justify-center gap-3 rounded-lg shadow-md hover:shadow-lg transform hover:scale-105"
+                disabled={isProcessing}
+                className="w-full bg-[#3E2C1D] text-[#E8D9B8] px-8 py-4 font-display font-bold border-4 border-[#3E2C1D] hover:bg-[#6B4423] hover:border-[#6B4423] transition-all duration-300 flex items-center justify-center gap-3 rounded-lg shadow-md hover:shadow-lg transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
               >
-                <Upload size={24} />
-                {uploadedImage ? 'Change Photo' : 'Upload Photo'}
+                {isProcessing ? (
+                  <>
+                    <RefreshCw size={24} className="animate-spin" />
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    <Upload size={24} />
+                    {uploadedImage ? 'Change Photo' : 'Upload Photo'}
+                  </>
+                )}
               </button>
               {uploadedImage && (
-                <div className="mt-6 text-center">
+                <div className="mt-6 text-center animate-in fade-in slide-in-from-bottom-2">
                   <div className="relative inline-block">
                     <img
                       src={uploadedImage}
                       alt="Preview"
-                      className="w-32 h-32 rounded-full mx-auto object-cover border-4 border-[#3E2C1D] shadow-lg"
+                      className="w-32 h-32 rounded-full mx-auto object-cover border-4 border-[#3E2C1D] shadow-lg transition-all duration-300 hover:scale-105"
+                      style={{
+                        imageRendering: 'high-quality',
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                      }}
                     />
-                    <div className="absolute -top-2 -right-2 bg-[#D4AF37] rounded-full p-2 shadow-md">
-                      <span className="text-[#3E2C1D] text-xs">✓</span>
+                    <div className="absolute -top-2 -right-2 bg-[#D4AF37] rounded-full p-2 shadow-md animate-pulse">
+                      <span className="text-[#3E2C1D] text-xs font-bold">✓</span>
                     </div>
                   </div>
+                  <p className="mt-2 text-xs text-[#6B4423] font-serif italic">
+                    Image uploaded successfully
+                  </p>
                   <button
-                    onClick={() => setUploadedImage(null)}
+                    onClick={() => {
+                      setUploadedImage(null);
+                      setOriginalImage(null);
+                      if (fileInputRef.current) {
+                        fileInputRef.current.value = '';
+                      }
+                    }}
                     className="mt-4 text-[#6B4423] hover:text-[#3E2C1D] font-serif flex items-center gap-2 mx-auto transition-colors duration-300 hover:underline"
                   >
                     <RefreshCw size={16} /> Remove Photo
@@ -442,7 +548,9 @@ const AvatarCardGenerator = () => {
               <h3 className="font-display text-2xl font-bold text-[#3E2C1D] mb-6">Your Details</h3>
               <div className="space-y-4">
                 <div>
-                  <label className="font-serif text-[#6B4423] block mb-2">Name</label>
+                  <label className="font-serif text-[#6B4423] block mb-2">
+                    Name {participantName && <span className="text-[#D4AF37]">✓</span>}
+                  </label>
                   <input
                     type="text"
                     value={participantName}
@@ -450,6 +558,11 @@ const AvatarCardGenerator = () => {
                     placeholder="Enter your name"
                     className="w-full px-4 py-3 border-2 border-[#3E2C1D] font-serif text-[#3E2C1D] focus:outline-none focus:border-[#6B4423] rounded-md transition-all duration-300 focus:shadow-md"
                   />
+                  {participantName && (
+                    <p className="mt-1 text-xs text-[#6B4423] font-serif italic">
+                      {participantName.length} characters
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label className="font-serif text-[#6B4423] block mb-2">Role</label>
@@ -478,7 +591,7 @@ const AvatarCardGenerator = () => {
               </h3>
 
               <div
-                className={`relative mx-auto border-4 overflow-hidden rounded-xl transition-all duration-500 `}
+                className={`relative mx-auto border-4 overflow-hidden rounded-xl transition-all duration-500 transform hover:scale-[1.02]`}
                 style={{
                   width: '100%',
                   maxWidth: '400px',
@@ -524,7 +637,7 @@ const AvatarCardGenerator = () => {
                   ></div>
 
                   <div
-                    className={`w-32 h-32 rounded-full border-4 bg-white flex items-center justify-center overflow-hidden shadow-2xl transition-transform duration-300 hover:scale-110 relative z-10`}
+                    className={`w-32 h-32 rounded-full border-4 bg-white flex items-center justify-center overflow-hidden shadow-2xl transition-all duration-300 hover:scale-110 relative z-10`}
                     style={{
                       borderColor: currentStyle.accent,
                       boxShadow: `0 8px 32px ${currentStyle.accent}60, inset 0 0 20px ${currentStyle.secondaryAccent}20`,
@@ -532,12 +645,23 @@ const AvatarCardGenerator = () => {
                   >
                     {uploadedImage ? (
                       <img
+                        ref={previewImageRef}
                         src={uploadedImage}
                         alt="Avatar"
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover transition-opacity duration-300"
+                        style={{
+                          imageRendering: 'high-quality',
+                          objectFit: 'cover',
+                          objectPosition: 'center',
+                        }}
+                        onLoad={() => {
+                          if (previewImageRef.current) {
+                            previewImageRef.current.style.opacity = '1';
+                          }
+                        }}
                       />
                     ) : (
-                      <span className="text-5xl filter drop-shadow-lg">{currentStyle.icon}</span>
+                      <span className="text-5xl filter drop-shadow-lg transition-transform duration-300">{currentStyle.icon}</span>
                     )}
                   </div>
 
@@ -551,13 +675,18 @@ const AvatarCardGenerator = () => {
                 </div>
 
                 {/* Name & Role */}
-                <div className="absolute top-72 left-0 right-0 text-center px-4">
-                  <div className="font-display text-xl font-bold mb-2 tracking-wide text-[#D4AF37]">
+                <div className="absolute top-72 left-0 right-0 text-center px-4 transition-all duration-300">
+                  <div 
+                    className="font-display text-xl font-bold mb-2 tracking-wide transition-all duration-300"
+                    style={{
+                      color: participantName ? '#D4AF37' : currentStyle.accent + '80',
+                      textShadow: participantName ? '0 2px 4px rgba(0,0,0,0.2)' : 'none',
+                    }}
+                  >
                     {participantName || 'Your Name'}
                   </div>
                   <div
-                    className={`inline-block px-4 py-1 rounded-full text-xs font-serif font-semibold
-`}
+                    className={`inline-block px-4 py-1 rounded-full text-xs font-serif font-semibold transition-all duration-300`}
                     style={{
                       backgroundColor: `${currentStyle.secondaryAccent}30`,
                       color: currentStyle.accent,

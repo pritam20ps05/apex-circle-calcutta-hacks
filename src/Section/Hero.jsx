@@ -1,27 +1,27 @@
-import { Calendar, MapPin, Users, ChevronRight } from 'lucide-react';
-import Image from '../../src/assets/biswabangla-with-tram.jpeg';
+import { Calendar, MapPin, Users } from 'lucide-react';
+import Image from '../assets/biswabangla-with-tram.jpeg';
 import Border from '../components/ui/Border';
-import apexLogo from '../../src/assets/Icon/apexlogo.png';
+import apexLogo from '../assets/Icon/apexlogo.png';
 import SocialIcons from '../components/ui/SocialIcon';
-import devfolio from '../../src/assets/Devfolio.png';
+import { LINKS, EVENT_INFO } from '../constants/links';
 
-import { FaDiscord, FaGithub, FaInstagram, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa';
+import { FaDiscord, FaInstagram, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa';
 import { SiBento } from 'react-icons/si';
 import { RiGroupFill } from 'react-icons/ri';
 
 const iconsPanel1 = [
   {
     icon: FaInstagram,
-    link: 'https://links.calcuttahacks.xyz/instagram',
+    link: LINKS.instagram,
   },
-  { icon: SiBento, link: 'https://links.calcuttahacks.xyz/bento' },
-  { icon: FaLinkedinIn, link: 'https://links.calcuttahacks.xyz/linkedin' },
+  { icon: SiBento, link: LINKS.bento },
+  { icon: FaLinkedinIn, link: LINKS.linkedin },
 ];
 
 const iconsPanel2 = [
-  { icon: RiGroupFill, link: 'https://links.calcuttahacks.xyz/commudle' },
-  { icon: FaDiscord, link: 'https://links.calcuttahacks.xyz/discord' },
-  { icon: FaWhatsapp, link: 'https://links.calcuttahacks.xyz/whatsapp ' },
+  { icon: RiGroupFill, link: LINKS.commudle },
+  { icon: FaDiscord, link: LINKS.discord },
+  { icon: FaWhatsapp, link: LINKS.whatsapp },
 ];
 
 const Hero = () => (
@@ -33,23 +33,10 @@ const Hero = () => (
           <img
             src={Image}
             alt="Biswa Bangla with Tram"
-            className="w-full h-auto max-h-[90vh] object-contain opacity-30"
-            style={{
-              maxWidth: '100%',
-              objectPosition: 'center center',
-              marginTop: '4rem',
-              marginBottom: '2rem',
-              '@media (min-width: 768px)': {
-                maxHeight: '80vh',
-                marginTop: '5rem',
-                marginBottom: '4rem',
-              },
-              '@media (min-width: 1024px)': {
-                maxHeight: '75vh',
-                marginTop: '6rem',
-                marginBottom: '6rem',
-              },
-            }}
+            className="w-full h-auto max-h-[95vh] md:max-h-[92vh] lg:max-h-[90vh] object-contain opacity-30"
+            loading="eager"
+            fetchPriority="high"
+            decoding="sync"
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-[#F4E5C2]/30 via-transparent to-[#F4E5C2]/30"></div>
@@ -71,6 +58,9 @@ const Hero = () => (
             src={apexLogo}
             alt="Logo"
             className="mx-auto h-[5rem] w-[12rem] sm:h-20 sm:w-72 md:h-24 md:w-96 lg:h-24 lg:w-[24rem] object-contain"
+            loading="eager"
+            fetchPriority="high"
+            decoding="sync"
           />
 
           {/* Tagline */}
@@ -113,9 +103,9 @@ const Hero = () => (
               <span className="font-medium">TIU, Kolkata</span>
             </div>
             <div className="hidden md:block w-px h-6 bg-[#3E2C1D]"></div>
-            <div className="flex items-center gap-2 font-serif text-base md:text-lgs">
+            <div className="flex items-center gap-2 font-serif text-base md:text-lg">
               <Users className="text-[#6B4423] flex-shrink-0" size={20} />
-              <span className="font-medium">160 Hackers</span>
+              <span className="font-medium">{EVENT_INFO.participants}</span>
             </div>
           </div>
 
@@ -124,7 +114,7 @@ const Hero = () => (
 
             {/* Devfolio */}
             <a
-              href="https://calcutta-lesshacksgreater.devfolio.co"
+              href={LINKS.devfolio}
               target="_blank"
               rel="noopener noreferrer"
               className="relative group inline-flex items-center justify-center h-14 px-8 py-2 rounded-md overflow-hidden transition-all duration-300 transform hover:scale-105 
@@ -134,14 +124,10 @@ const Hero = () => (
               <div className="relative z-10 flex items-center justify-center w-full h-full">
                 <svg
                   className="w-6 h-6 mr-2"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xml:space="preserve"
+                  xmlns="https://www.w3.org/2000/svg"
                   id="devfolio"
-                  x="0"
-                  y="0"
-                  enable-background="new 0 0 60.3 66.2"
-                  version="1.1"
                   viewBox="0 0 60.3 66.2"
+                  aria-hidden="true"
                   >
                   <g id="Layer_2_1_">
                     <g id="Layer_1-2_1_">
@@ -160,14 +146,14 @@ const Hero = () => (
                   </g>
                 </svg>
                 <span className="text-white font-display font-bold text-xs sm:text-sm md:text-base">
-                  Apply with Devfolio{' '}
+                  Apply with Devfolio
                 </span>
               </div>
             </a>
 
             {/* Join Newsletter */}
             <a 
-              href="https://links.calcuttahacks.xyz/Join-Newsletter"
+              href={LINKS.newsletter}
               target="_blank"
               rel="noopener noreferrer"
               className="group relative inline-flex items-center h-14 px-8 py-2 rounded-md overflow-hidden 
@@ -182,7 +168,7 @@ const Hero = () => (
 
             {/* Discord */}
             <a
-              href="https://links.calcuttahacks.xyz/discord"
+              href={LINKS.discord}
               target="_blank"
               rel="noopener noreferrer"
               className="group relative flex items-center justify-center px-8 py-4 text-white font-display font-bold rounded-md overflow-hidden transition-all duration-300 transform hover:scale-105 
@@ -194,7 +180,7 @@ const Hero = () => (
                   className="w-6 h-6 mr-2"
                   fill="currentColor"
                   viewBox="0 0 71 55"
-                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns="https://www.w3.org/2000/svg"
                   aria-hidden="true"
                 >
                   <path d="M60.104 4.552A58.345 58.345 0 0046.605 0a41.243 41.243 0 00-1.94 4.026 56.35 56.35 0 00-16.33 0A41.21 41.21 0 0026.395 0 58.339 58.339 0 0011.896 4.552C-2.117 24.07-1.313 43.27.104 47.41a58.563 58.563 0 0017.31 4.448 41.088 41.088 0 003.565-5.834 35.253 35.253 0 01-5.564-2.637c.468-.346.927-.71 1.372-1.085 10.88 5.08 22.652 5.08 33.493 0 .445.375.904.74 1.372 1.085a35.233 35.233 0 01-5.565 2.637 41.085 41.085 0 003.566 5.834 58.567 58.567 0 0017.31-4.448c1.417-4.14 2.22-23.34-11.794-42.858zM23.725 37.78c-3.171 0-5.778-2.899-5.778-6.473 0-3.575 2.573-6.473 5.778-6.473 3.22 0 5.822 2.899 5.778 6.473 0 3.574-2.558 6.473-5.778 6.473zm23.537 0c-3.171 0-5.778-2.899-5.778-6.473 0-3.575 2.573-6.473 5.778-6.473 3.22 0 5.822 2.899 5.778 6.473 0 3.574-2.558 6.473-5.778 6.473z" />

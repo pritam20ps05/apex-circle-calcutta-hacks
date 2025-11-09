@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award } from 'lucide-react';
+import { Award, Sparkles, Trophy, Star, Gift } from 'lucide-react';
 import { VintageCard } from './Tracks';
 import SpotlightCard from '../components/ui/SpotlightCard';
 import first from '../../src/assets/Icon/firstPlace.png';
@@ -94,36 +94,151 @@ const PRIZES = () => {
           })}
         </div>
 
-        <VintageCard className="text-center relative overflow-hidden">
-          <div className="absolute inset-0 w-full h-full opacity-5 pointer-events-none">
-            <div
-              className="w-full h-full"
-              style={{
-                backgroundImage:
-                  "url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23D4AF37' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E\")",
-              }}
-            ></div>
+        {/* Additional Prizes Section - Enhanced */}
+        <div className="relative mt-16">
+          {/* Decorative Background Elements */}
+          <div className="absolute inset-0 opacity-10 pointer-events-none">
+            <div className="absolute top-0 left-0 w-32 h-32 border-4 border-[#D4AF37] rounded-full blur-2xl"></div>
+            <div className="absolute bottom-0 right-0 w-40 h-40 border-4 border-[#D4AF37] rounded-full blur-2xl"></div>
           </div>
 
-          <div className="relative z-10">
-            <h3 className="font-display text-3xl font-bold text-[#3E2C1D] mb-4 mt-4 flex items-center justify-center">
-              <Award className="mr-3 text-[#D4AF37]" size={32} />
-              <span>Additional Prizes</span>
-            </h3>
+          <VintageCard className="text-center relative overflow-hidden border-4 border-[#D4AF37]/30 bg-gradient-to-br from-[#F4E5C2] via-[#EBDBB9] to-[#F4E5C2]">
+            {/* Animated Background Pattern */}
+            <div className="absolute inset-0 w-full h-full opacity-[0.03] pointer-events-none">
+              <div
+                className="w-full h-full animate-pulse"
+                style={{
+                  backgroundImage:
+                    "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23D4AF37' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M0 60L60 0H30L0 30M60 60V30L30 60'/%3E%3C/g%3E%3C/svg%3E\")",
+                }}
+              ></div>
+            </div>
 
-            <div className="grid md:grid-cols-3 gap-6 font-serif text-lg text-[#6B4423]">
-              <div className="p-3 hover:bg-[#F4E5C2]/50 rounded transition-colors duration-300">
-                🏆 To Be Declared
+            {/* Shimmer Effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent animate-shimmer pointer-events-none"></div>
+
+            {/* Heritage Border Decoration */}
+            <div className="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-[#D4AF37] opacity-50">
+              <div className="absolute -top-1 -left-1 w-3 h-3 bg-[#D4AF37] rounded-full"></div>
+            </div>
+            <div className="absolute top-0 right-0 w-16 h-16 border-t-4 border-r-4 border-[#D4AF37] opacity-50">
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#D4AF37] rounded-full"></div>
+            </div>
+            <div className="absolute bottom-0 left-0 w-16 h-16 border-b-4 border-l-4 border-[#D4AF37] opacity-50">
+              <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-[#D4AF37] rounded-full"></div>
+            </div>
+            <div className="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-[#D4AF37] opacity-50">
+              <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-[#D4AF37] rounded-full"></div>
+            </div>
+
+            <div className="relative z-10 py-8 px-6">
+              {/* Enhanced Header */}
+              <div className="mb-8">
+                <div className="flex items-center justify-center gap-4 mb-4">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-[#D4AF37]/30 rounded-full blur-lg animate-pulse"></div>
+                    <Award className="relative text-[#D4AF37] animate-bounce" size={40} />
+                    <Sparkles className="absolute -top-1 -right-1 text-[#D4AF37] animate-pulse" size={16} />
+                  </div>
+                  <h3 className="font-display text-4xl md:text-5xl font-bold text-[#3E2C1D] relative">
+                    <span className="relative z-10">Additional Prizes</span>
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent"></div>
+                  </h3>
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-[#D4AF37]/30 rounded-full blur-lg animate-pulse"></div>
+                    <Trophy className="relative text-[#D4AF37] animate-bounce" size={40} style={{ animationDelay: '0.2s' }} />
+                  </div>
+                </div>
+                <p className="font-serif text-lg text-[#6B4423]/80 italic">
+                  Exciting rewards await the winners!
+                </p>
               </div>
-              <div className="p-3 hover:bg-[#F4E5C2]/50 rounded transition-colors duration-300">
-                🏆 To Be Declared
+
+              {/* Enhanced Prize Cards */}
+              <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+                {[1, 2, 3].map((index) => (
+                  <div
+                    key={index}
+                    className="group relative transform transition-all duration-500 hover:scale-105"
+                  >
+                    {/* Card Glow Effect */}
+                    <div className="absolute -inset-1 bg-gradient-to-r from-[#D4AF37] via-[#F4E5C2] to-[#D4AF37] rounded-xl opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-500"></div>
+                    
+                    {/* Main Card */}
+                    <div className="relative bg-gradient-to-br from-[#3E2C1D]/5 via-[#F4E5C2] to-[#EBDBB9] border-2 border-[#D4AF37]/40 rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:border-[#D4AF37] overflow-hidden">
+                      {/* Animated Background Pattern */}
+                      <div className="absolute inset-0 opacity-5">
+                        <div className="w-full h-full" style={{
+                          backgroundImage: "repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(212, 175, 55, 0.1) 10px, rgba(212, 175, 55, 0.1) 20px)"
+                        }}></div>
+                      </div>
+
+                      {/* Floating Particles Effect */}
+                      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                        {[...Array(5)].map((_, i) => (
+                          <div
+                            key={i}
+                            className="absolute w-2 h-2 bg-[#D4AF37] rounded-full opacity-20 animate-float"
+                            style={{
+                              left: `${20 + i * 15}%`,
+                              top: `${10 + i * 20}%`,
+                              animationDelay: `${i * 0.3}s`,
+                              animationDuration: `${3 + i * 0.5}s`,
+                            }}
+                          ></div>
+                        ))}
+                      </div>
+
+                      {/* Content */}
+                      <div className="relative z-10 flex flex-col items-center">
+                        {/* Trophy Icon with Animation */}
+                        <div className="relative mb-4">
+                          <div className="absolute inset-0 bg-[#D4AF37]/20 rounded-full blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                          <div className="relative bg-gradient-to-br from-[#D4AF37] to-[#F4E5C2] p-4 rounded-full border-2 border-[#D4AF37] group-hover:rotate-12 transition-transform duration-500">
+                            <Trophy 
+                              className="text-[#3E2C1D] group-hover:scale-110 transition-transform duration-300" 
+                              size={32} 
+                            />
+                          </div>
+                          {/* Sparkle Effects */}
+                          <Star className="absolute -top-1 -right-1 text-[#D4AF37] animate-ping" size={12} />
+                          <Star className="absolute -bottom-1 -left-1 text-[#D4AF37] animate-pulse" size={10} style={{ animationDelay: '0.5s' }} />
+                        </div>
+
+                        {/* Prize Text */}
+                        <div className="text-center">
+                          <div className="font-display text-xl md:text-2xl font-bold text-[#3E2C1D] mb-2 group-hover:text-[#D4AF37] transition-colors duration-300">
+                            Prize {index}
+                          </div>
+                          <div className="font-serif text-lg text-[#6B4423] font-semibold flex items-center justify-center gap-2">
+                            <Gift className="text-[#D4AF37] animate-bounce" size={18} style={{ animationDelay: `${index * 0.2}s` }} />
+                            <span className="relative">
+                              To Be Declared
+                              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D4AF37] scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Decorative Bottom Accent */}
+                        <div className="mt-4 w-16 h-1 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      </div>
+
+                      {/* Hover Shine Effect */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div className="p-3 hover:bg-[#F4E5C2]/50 rounded transition-colors duration-300">
-                🏆 To Be Declared
+
+              {/* Bottom Decorative Element */}
+              <div className="mt-8 flex items-center justify-center gap-4">
+                <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#D4AF37]"></div>
+                <Sparkles className="text-[#D4AF37] animate-pulse" size={20} />
+                <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#D4AF37]"></div>
               </div>
             </div>
-          </div>
-        </VintageCard>
+          </VintageCard>
+        </div>
       </div>
     </section>
   );

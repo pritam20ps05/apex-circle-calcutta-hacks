@@ -27,7 +27,7 @@ function ContactForm() {
       });
 
       const result = await response.json();
-      console.log(result); // Debugging
+      // Form submission successful
       if (result.success) {
         alert('Issue reported successfully!');
         setFormData({ name: '', email: '', issueType: '', issueDescription: '' });

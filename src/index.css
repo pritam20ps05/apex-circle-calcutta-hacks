@@ -1,10 +1,7 @@
-html,
-body {
-  scroll-behavior: smooth;
-}
+/* Smooth scrolling handled by Lenis */
 
 body {
-  font-family: 'Cinzel';
+  font-family: 'Cinzel', serif;
   font-weight: 900;
   width: 100vw;
   overflow-x: hidden;
@@ -13,7 +10,7 @@ body {
 h1,
 h2,
 h3 {
-  font-family: 'Playfair Display';
+  font-family: 'Playfair Display', serif;
   font-style: normal;
   font-weight: 700;
 }

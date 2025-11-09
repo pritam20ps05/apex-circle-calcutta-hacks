@@ -1,4 +1,4 @@
-import { Code, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -6,10 +6,19 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Handle scroll for background
+  // Handle scroll for background with throttling
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 50);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -43,8 +52,12 @@ const Navbar = () => {
             to="/"
             className="flex items-center space-x-3 hover:opacity-80 transition-opacity -ml-2 sm:-ml-4"
           >
-            <div className="w-12 h-12 border-4 border-[#3E2C1D] bg-[#D4AF37] flex items-center justify-center">
-              <Code className="text-[#3E2C1D]" size={24} />
+            <div className="w-12 h-12 border-4 border-[#3E2C1D] bg-[#D4AF37] flex items-center justify-center overflow-hidden">
+              <img 
+                src="/Untitled design (1).png" 
+                alt="Calcutta Hacks Logo" 
+                className="w-full h-full object-contain transition-transform duration-300 hover:scale-[1.2]"
+              />
             </div>
             <div className="font-display text-2xl font-bold text-[#3E2C1D]">
               Calcutta <span className="text-[#6B4423]">&lt;Hacks/&gt;</span>
