@@ -1,38 +1,23 @@
-import React, { useState } from 'react';
 import {
-  Train,
-  Bus,
-  Landmark,
   Linkedin,
-  Github,
-  Twitter,
   Instagram,
   Mail,
   MapPin,
   Calendar,
   ArrowRight,
-  ExternalLink,
+  Phone,
+  Code,
 } from 'lucide-react';
-import { Phone } from 'lucide-react';
 import { Link } from 'react-router';
-import { Code } from 'lucide-react';
 import { RiGroupFill } from 'react-icons/ri';
-
 import { GiCableStayedBridge, GiIndianPalace } from 'react-icons/gi';
 import { MdOutlineTram } from 'react-icons/md';
 import { GrBus } from 'react-icons/gr';
-
-import { FaDiscord, FaGithub, FaInstagram, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa';
+import { FaWhatsapp } from 'react-icons/fa';
+import VisitorCount from './VisitorCount';
+import { LINKS, EVENT_INFO } from '../constants/links';
 
 const Footer = () => {
-  const [email, setEmail] = useState('');
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    // Handle newsletter signup
-    alert(`Thank you for subscribing with ${email}!`);
-    setEmail('');
-  };
 
   return (
     <footer className="bg-[#3E2C1D] text-[#F4E5C2] pt-16 pb-8 relative overflow-hidden">
@@ -67,11 +52,11 @@ const Footer = () => {
             </p>
             <div className="flex items-center mb-3 font-serif">
               <Calendar className="mr-2 text-[#D4AF37]" size={16} />
-              <span>December 27-28, 2025</span>
+              <span>{EVENT_INFO.date}</span>
             </div>
             <div className="flex items-start mb-3 font-serif">
               <MapPin className="mr-2 text-[#D4AF37] mt-1 flex-shrink-0" size={16} />
-              <span>Techno India University, Sector V, Bidhannagar, Kolkata, West Bengal 700091</span>
+              <span>{EVENT_INFO.location}</span>
             </div>
           </div>
 
@@ -143,6 +128,10 @@ const Footer = () => {
                 </a>
               </div>
             </div>
+            {/* Visitor Count */}
+            <div className="mt-4 pt-4 border-t border-[#D4AF37]/20">
+              <VisitorCount />
+            </div>
           </div>
 
           {/* Column 3 - Connect */}
@@ -152,7 +141,7 @@ const Footer = () => {
             </h3>
             <div className="grid grid-cols-2 gap-4 mb-4">
               <a
-                href="https://links.calcuttahacks.xyz/linkedin"
+                href={LINKS.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center group"
@@ -166,7 +155,7 @@ const Footer = () => {
               </a>
 
               <a
-                href="https://links.calcuttahacks.xyz/whatsapp"
+                href={LINKS.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center group"
@@ -180,7 +169,7 @@ const Footer = () => {
               </a>
 
               <a
-                href="https://links.calcuttahacks.xyz/instagram"
+                href={LINKS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center group"
@@ -194,7 +183,7 @@ const Footer = () => {
               </a>
 
               <a
-                href="https://links.calcuttahacks.xyz/commudle"
+                href={LINKS.commudle}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center group"
@@ -210,7 +199,7 @@ const Footer = () => {
 
             <div className="mt-6 flex flex-col gap-4">
               <a
-                href="mailto:support@calcuttahacks.xyz"
+                href={LINKS.email}
                 className="flex items-center hover:text-[#D4AF37] transition-colors font-serif"
               >
                 <Mail size={16} className="mr-2 text-[#D4AF37]" />
@@ -218,7 +207,7 @@ const Footer = () => {
               </a>
 
               <a
-                href="tel:+916291129896"
+                href={LINKS.phone1}
                 className="flex items-center hover:text-[#D4AF37] transition-colors font-serif"
               >
                 <Phone size={16} className="text-[#D4AF37] mr-[0.5rem]" />
@@ -226,7 +215,7 @@ const Footer = () => {
               </a>
 
               <a
-                href="tel:+917003058672"
+                href={LINKS.phone2}
                 className="flex items-center hover:text-[#D4AF37] transition-colors font-serif"
               >
                 <Phone size={16} className="text-[#D4AF37] mr-[0.5rem]" />
@@ -244,7 +233,7 @@ const Footer = () => {
               Stay updated with the latest news and announcements for Calcutta &lt;Hacks/&gt;
             </p>
             <a 
-              href="https://links.calcuttahacks.xyz/Join-Newsletter"
+              href={LINKS.newsletter}
               target="_blank"
               rel="noopener noreferrer"
               className="group relative inline-flex items-center h-10 w-full px-8 py-2 rounded-md overflow-hidden 
@@ -303,14 +292,14 @@ const Footer = () => {
           </p>
           <div className="flex gap-4 mt-4 md:mt-0">
             <a
-              href="https://devfolio.co/privacy-policy"
+              href={LINKS.privacy}
               className="hover:text-[#D4AF37] transition-colors"
             >
               Privacy Policy
             </a>
             <span>|</span>
             <a
-              href="https://devfolio.co/code-of-conduct"
+              href={LINKS.conduct}
               className="hover:text-[#D4AF37] transition-colors"
             >
               Code of Conduct

@@ -1,9 +1,8 @@
-import React from 'react';
-import { FaLightbulb, FaLandmark, FaTram, FaBus, FaTaxi, FaArchway } from 'react-icons/fa';
-import bridge from '../../src/assets/Icon/bridge.png';
-import taxi from '../../src/assets/Icon/taxii.png';
-import tram from '../../src/assets/Icon/tram.png';
-import bluebus from '../../src/assets/Icon/bluebus.png';
+import { FaLightbulb, FaLandmark } from 'react-icons/fa';
+import bridge from '../assets/Icon/bridge.png';
+import taxi from '../assets/Icon/taxii.png';
+import tram from '../assets/Icon/tram.png';
+import bluebus from '../assets/Icon/bluebus.png';
 import '../App.css';
 const About = () => (
   <section id="about" className="py-20 relative bg-[#f4e5c2]">

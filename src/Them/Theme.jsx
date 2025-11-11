@@ -1,23 +1,43 @@
 import Lenis from 'lenis';
-import React from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import DotGrid from '../components/DotGrid';
 
 const Theme = ({ children }) => {
-  const lenis = new Lenis();
-  function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-  }
+  const lenisRef = useRef(null);
+  const rafIdRef = useRef(null);
 
-  requestAnimationFrame(raf);
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.0,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smooth: true,
+      smoothTouch: false,
+      touchMultiplier: 2,
+      infinite: false,
+    });
+    lenisRef.current = lenis;
 
-  gsap.ticker.add(time => {
-    lenis.raf(time * 1000);
-  });
+    const rafCallback = (time) => {
+      lenis.raf(time);
+      rafIdRef.current = requestAnimationFrame(rafCallback);
+    };
 
-  gsap.ticker.lagSmoothing(0);
+    rafIdRef.current = requestAnimationFrame(rafCallback);
+
+    const gsapCallback = (time) => lenis.raf(time * 1000);
+    gsap.ticker.add(gsapCallback);
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
+      }
+      lenis.destroy();
+      gsap.ticker.remove(gsapCallback);
+    };
+  }, []);
 
   return (
     <div

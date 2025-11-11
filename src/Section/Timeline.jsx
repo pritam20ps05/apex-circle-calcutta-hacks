@@ -47,50 +47,54 @@ const Timeline = () => {
     <div id="timeline" className="w-full min-h-screen py-20 bg-[#ebdbb9]">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#3f2e1f] mb-4">Event Timeline</h1>
-          <p className="text-xl text-[#5d4b31] max-w-2xl mx-auto">
+          <h1 className="font-display text-[5.5vw] lg:text-6xl font-bold text-[#3E2C1D] mb-4">Event Timeline</h1>
+          <div className="w-32 h-1 bg-[#D4AF37] mx-auto mb-4"></div>
+          <p className="font-serif text-xl text-[#6B4423] max-w-2xl mx-auto">
             Your guide to all activities during Calcutta &lt;Hacks/&gt;
           </p>
         </div>
 
-        <div className="flex justify-center items-center mb-12">
+        {/* Date Display */}
+        <div className="flex justify-center items-center mb-8">
           <div className="flex items-center space-x-4">
-            <FaCalendarAlt className="text-2xl text-[#3e2d1c]" />
-            <div className="text-lg font-bold text-[#3e2d1c]">
+            <FaCalendarAlt className="text-2xl text-[#3E2C1D]" />
+            <div className="font-serif text-lg font-bold text-[#3E2C1D] uppercase tracking-wide">
               {activeTab === 0 ? 'December 27, 2025' : 'December 28, 2025'}
             </div>
           </div>
         </div>
 
+        {/* Day Selector Buttons */}
         <div className="flex justify-center mb-16">
-          <div className="flex rounded-xl shadow-lg overflow-hidden">
+          <div className="flex rounded-lg overflow-hidden shadow-md">
+            {/* DAY 1 Button */}
             <button
-              className={`py-3 px-10 font-semibold text-lg transition-all duration-300
-                ${
-                  activeTab === 0
-                    ? 'bg-[#3e2d1c] text-white shadow-inner'
-                    : 'bg-[#f9f3e3] text-[#3e2d1c] hover:bg-[#ece6d6]'
-                }`}
+              className={`px-12 py-3 font-serif font-bold text-base uppercase tracking-wide transition-all duration-300 rounded-l-lg ${
+                activeTab === 0
+                  ? 'bg-[#3E2C1D] text-[#F4E5C2]'
+                  : 'bg-[#F4E5C2] text-[#3E2C1D] hover:bg-[#EBDBB9]'
+              }`}
               onClick={() => {
                 setActiveTab(0);
                 setActiveEvent(null);
               }}
             >
-              Day 1
+              DAY 1
             </button>
+
+            {/* DAY 2 Button */}
             <button
-              className={`py-3 px-10 font-semibold text-lg transition-all duration-300
-                ${
-                  activeTab === 1
-                    ? 'bg-[#3e2d1c] text-white shadow-inner'
-                    : 'bg-[#f9f3e3] text-[#3e2d1c] hover:bg-[#ece6d6]'
-                }`}
+              className={`px-12 py-3 font-serif font-bold text-base uppercase tracking-wide transition-all duration-300 rounded-r-lg ${
+                activeTab === 1
+                  ? 'bg-[#3E2C1D] text-[#F4E5C2]'
+                  : 'bg-[#F4E5C2] text-[#3E2C1D] hover:bg-[#EBDBB9]'
+              }`}
               onClick={() => {
                 setActiveTab(1);
                 setActiveEvent(null);
               }}
             >
-              Day 2
+              DAY 2
             </button>
           </div>
         </div>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ChevronDown, HelpCircle } from 'lucide-react';
 
 const FAQ = () => {
@@ -142,17 +143,27 @@ const FAQ = () => {
           ))}
         </div>
 
-        {/* Contact CTA */}
+        {/* Action Buttons */}
         <div className="mt-12 text-center">
-          <div className="border-4 border-[#3E2C1D] bg-[#D4AF37] inline-block px-8 py-4">
-            <p className="font-serif text-lg text-[#3E2C1D] mb-2">Still have questions?</p>
+          <p className="font-serif text-lg text-[#3E2C1D] mb-6">Still have questions?</p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            {/* Know More About Calcutta Button */}
+            <Link
+              to="/about-kolkata"
+              className="group relative inline-flex items-center justify-center px-8 py-4 border-4 border-[#3E2C1D] bg-[#D4AF37] text-[#3E2C1D] font-display font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[4px_4px_0px_0px_rgba(62,44,29,1)]"
+            >
+              <span className="relative z-10 uppercase tracking-wide">Know More About Calcutta</span>
+              <span className="absolute inset-0 bg-[linear-gradient(90deg,#D4AF37_0%,#ffdd86_50%,#D4AF37_100%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+            </Link>
+
+            {/* Contact Us Button */}
             <a
               href="https://links.calcuttahacks.xyz/contact-us"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-display font-bold text-xl text-[#3E2C1D] hover:text-white transition-colors underline"
+              className="group relative inline-flex items-center justify-center px-8 py-4 border-4 border-[#3E2C1D] bg-[#F4E5C2] text-[#3E2C1D] font-display font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:bg-[#D4AF37] hover:shadow-[4px_4px_0px_0px_rgba(62,44,29,1)]"
             >
-              Contact Us
+              <span className="relative z-10">Contact Us</span>
             </a>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import Marquee from 'react-fast-marquee';
 import Abhishek from '../../src/assets/Team/AbhishekBan.jpg';
 import Agnij from '../../src/assets/Team/Agnij.jpg';
@@ -21,6 +21,9 @@ import TiltedCard from '../components/ui/TiltedCard';
 import { Linkedin, Twitter, Github } from 'lucide-react';
 
 const Team = () => {
+  const [isUserInteracting, setIsUserInteracting] = useState(false);
+  const interactionTimeoutRef = useRef(null);
+
   const team = [
     // 🥇 1st Hierarchy — Founders & Advisor
     {
@@ -195,27 +198,55 @@ const Team = () => {
   return (
     <section id="team" className="py-20 bg-[#F4E5C2]">
       <div className="w-[90vw] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <div className="text-center mb-8">
           <h2 className="font-display text-5xl md:text-6xl font-bold text-[#3E2C1D] mb-4">
             OUR TEAM
           </h2>
           <div className="w-32 h-1 bg-[#D4AF37] mx-auto"></div>
-          <p className="font-serif text-xl text-[#6B4423] mt-6">
+          <p className="font-serif text-xl text-[#6B4423] mt-4">
             The crew behind Calcutta &lt;Hacks/&gt;
           </p>
         </div>
 
-        {/* Infinite Scroller */}
-        <Marquee
-          speed={95}
-          gradient={false}
-          pauseOnHover
-          loop={0}
-          style={{ transition: 'transform 0.8s ease-in-out' }}
-          autoFill={true}
-          delay={1}
-          className="py-10 space-x-3 transform-3d translate-0.5 duration-300"
+        {/* Infinite Scroller with Auto-Scroll and Manual Control */}
+        <div
+          className="relative overflow-hidden py-4"
+          onMouseEnter={() => {
+            setIsUserInteracting(true);
+            if (interactionTimeoutRef.current) {
+              clearTimeout(interactionTimeoutRef.current);
+            }
+          }}
+          onMouseLeave={() => {
+            interactionTimeoutRef.current = setTimeout(() => {
+              setIsUserInteracting(false);
+            }, 1000);
+          }}
+          onTouchStart={() => {
+            setIsUserInteracting(true);
+            if (interactionTimeoutRef.current) {
+              clearTimeout(interactionTimeoutRef.current);
+            }
+          }}
+          onTouchEnd={() => {
+            interactionTimeoutRef.current = setTimeout(() => {
+              setIsUserInteracting(false);
+            }, 1000);
+          }}
         >
+          <Marquee
+            speed={95}
+            gradient={false}
+            pauseOnHover={true}
+            pauseOnClick={false}
+            loop={0}
+            style={{ 
+              transition: 'transform 0.8s ease-in-out',
+            }}
+            autoFill={true}
+            delay={1}
+            className="py-10 space-x-3 transform-3d translate-0.5 duration-300"
+          >
           {team.map((member, i) => (
             <div key={i} className="mx-6">
               {/* 🖤 Black border + glow effect */}
@@ -262,7 +293,8 @@ const Team = () => {
               </div>
             </div>
           ))}
-        </Marquee>
+          </Marquee>
+        </div>
       </div>
     </section>
   );
