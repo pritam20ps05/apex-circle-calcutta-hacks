@@ -10,6 +10,7 @@ import elevenlabs from '../../src/assets/Icon/elevenlabs.png';
 import axicov from '../../src/assets/Icon/axicov.png';
 import drop from '../../src/assets/Icon/drop.png';
 import keploy from '../../src/assets/Icon/keploy.png';
+import beeceptor from '../../src/assets/Icon/beeceptor.png';
 
 const categories = {
   silverspn: {
@@ -83,6 +84,17 @@ const categories = {
         logo: interviewbuddy,
         link: 'https://interviewbuddy.net/',
         tagline: 'AI-powered mock interviews, expert feedback, and personalized coaching.',
+      },
+    ],
+  },
+  aiutilityptn: {
+    name: 'AI Utility Partner',
+    partners: [
+      {
+        name: 'Beeceptor',
+        logo: beeceptor,
+        link: 'https://beeceptor.com/?utm_source=hackathon&utm_campaign=tiu_calcuttahacks',
+        tagline: 'Mock APIs made easy with AI.',
       },
     ],
   },
@@ -237,6 +249,9 @@ const OurPartners = () => {
 
         {/* Education Partners */}
         <SponsorCard category="educationptn" />
+
+        {/* AI Utility Partner */}
+        <SponsorCard category="aiutilityptn" />
 
         {/* Domain Partner */}
         <SponsorCard category="domainptn" />
